@@ -1,12 +1,5 @@
 <?php
 
-Use App\Http\Controllers\SupplierController;
-Use App\Http\Controllers\ProductController;
-Use App\Http\Controllers\StockController;
-Use App\Http\Controllers\TransactionController;
-Use App\Http\Controllers\TransactionDetailsController;
-Use App\Http\Controllers\UnitController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,9 +23,11 @@ Route::get('/', function() {
     return view('dashboard');
 });
 
-Route::resource('/supplier', SupplierController::class);
-Route::resource('/product', ProductController::class);
-Route::resource('/stock', StockController::class);
-Route::resource('/transaction', TransactionController::class);
-Route::resource('/transaction/details', TransactionDetailsController::class);
-Route::resource('/transaction', UnitController::class);
+Route::resources([
+    '/supplier' => 'SupplierController',
+    '/product' => 'ProductController',
+    '/stock' => 'StockController',
+    '/transaction' => 'TransactionController',
+    '/transaction/details' => 'TransactionDetailsController',
+    '/transaction' => 'UnitController'
+]);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\supplier;
+use App\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -14,7 +14,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $fresh_data = Supplier::all();
+        foreach ($fresh_data as $i => $data) {
+            print($data);
+        }
+        return;
     }
 
     /**
@@ -22,9 +26,16 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        print('<pre>');
+        $name = $request->get('name');
+        $brand_name = $request->get('brand-name');
+        $phone_number = $request->get('phone-number');
+        echo $name, "\n", $brand_name, "\n", $phone_number;
+        // print($request);
+        print('</pre>');
+        return;
     }
 
     /**
@@ -35,7 +46,22 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->get("name");
+        $brand_name = $request->get('brand-name');
+        $phone_number = $request->get('phone-number');
+
+        $supplier = new Supplier;
+        $supplier->uuid = $supplier::createUuid();
+        $supplier->name = $name;
+        $supplier->brand_name = $brand_name;
+        $supplier->phone_number = $phone_number;
+        $supplier->save();
+
+        if(!$supplier) {
+            return print "Error saving data!";
+        }
+        
+        return print "Data saved!";
     }
 
     /**
