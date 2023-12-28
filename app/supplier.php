@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class Supplier extends Model
 {
@@ -16,12 +15,11 @@ class Supplier extends Model
     //     });
     // }
 
-    public static function createUuid() { 
-        $generated_uuid = substr(Str::uuid(), 0, 10);
-        return $generated_uuid;
-    }
+    protected $table = 'suppliers';
+    protected $primaryKey = 'uuid';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
-    protected $table = "suppliers";
     protected $fillable = [
         "name", "brand_name", "phone_number"
     ];

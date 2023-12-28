@@ -11,6 +11,10 @@
 |
 */
 
+use App\Http\Controllers\GlobalController;
+
+
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -29,5 +33,16 @@ Route::resources([
     '/stock' => 'StockController',
     '/transaction' => 'TransactionController',
     '/transaction/details' => 'TransactionDetailsController',
-    '/transaction' => 'UnitController'
+    '/unit' => 'UnitController'
 ]);
+
+Route::get("/test-uuid", function() {
+    $uuid = GlobalController::createUuid();
+    print_r($uuid);
+    return $uuid;
+});
+
+
+Route::get("/test-variable/{name?}", function($name) {
+    return $name;
+});
