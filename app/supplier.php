@@ -3,18 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    // use SoftDeletes;
-
-    // protected static function boot() {
-    //     static::creating(function ($model) {
-    //         return $model->uuid = (string) Str::uuid();
-    //     });
-    // }
-
     protected $table = 'suppliers';
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';
@@ -27,4 +18,12 @@ class Supplier extends Model
     protected $hidden = [
         "id"
     ];
+
+    /**
+     * Get the Supplier that owns the products.
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }

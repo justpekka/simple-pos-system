@@ -30,13 +30,7 @@ class SupplierController extends Controller
      */
     public function create(Request $request)
     {
-        print('<pre>');
-            $name = $request->get('name');
-            $brand_name = $request->get('brand-name');
-            $phone_number = $request->get('phone-number');
-            echo $name, "\n", $brand_name, "\n", $phone_number;
-        print('</pre>');
-        return;
+        // 
     }
 
     /**
@@ -54,11 +48,13 @@ class SupplierController extends Controller
         $Supplier->phone_number = $request->get('phone-number');
         $Supplier->save();
 
+        echo $Supplier . "\n";
+
         if(!$Supplier) {
-            return print "Error saving data!";
+            return "Error saving data!";
         }
-        
-        return print "Data saved!";
+
+        return "Data saved!";
     }
 
     /**
@@ -69,12 +65,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier, $uuid)
     {
-        echo "<pre>";
-            $data = $supplier::find($uuid);
-            print($data);
-
-        echo "</pre>";
-        return;
+        $data = $supplier::find($uuid);
+        $data->products;
+        return $data;
     }
 
     /**
@@ -98,16 +91,25 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $Supplier, $uuid)
     {
         $current_data = $Supplier::find($uuid);
-        $current_data->name = $request->get("name");
-        $current_data->brand_name = $request->get('brand-name');
-        $current_data->phone_number = $request->get('phone-number');
+        $current_data->name = is_null($request->get("name")) ? 
+                                $current_data->name : 
+                                $request->get("name");
+        $current_data->brand_name = is_null($request->get('brand-name')) ? 
+                                $current_data->brand_name : 
+                                $request->get("brand-name");
+        $current_data->phone_number = is_null($request->get('phone-number')) ? 
+                                $current_data->phone_number : 
+                                $request->get('phone-number');
         $current_data->save();
+
+        echo $current_data . "\n";
 
         if( ! $current_data ) {
             echo "Error updating data!";
             return;
         }
 
+        // print $Supplier::orderBy("updated_at", "desc")->first();
         echo "Success updating data!";
         return;
     }
@@ -121,12 +123,12 @@ class SupplierController extends Controller
     public function destroy(Supplier $Supplier, $uuid)
     {
         $deleteData = $Supplier::destroy($uuid);
+
+        print_r($deleteData);
         if( ! $deleteData ) {
             print "Error deleting data! The message:";
-            print_r($deleteData);
             return;
         }
-    
         return print "Data deleted!";
     }
 }

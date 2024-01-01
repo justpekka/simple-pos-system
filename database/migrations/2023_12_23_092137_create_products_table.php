@@ -15,10 +15,9 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid("uuid");
-            $table->unsignedBigInteger("supplier_id");
-            $table->foreign("supplier_id")->references("id")->on("suppliers");
-            $table->string("brand_name");
+            $table->uuid("uuid")->unique();
+            $table->string("supplier_uuid")->nullable();
+            $table->foreign("supplier_uuid")->references("uuid")->on("suppliers")->onDelete("SET NULL");
             $table->string("name");
             $table->timestamps();
         });

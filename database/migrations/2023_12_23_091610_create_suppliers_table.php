@@ -15,7 +15,7 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid("uuid");
+            $table->uuid("uuid")->unique();
             $table->string("brand_name");
             $table->string("name");
             $table->unsignedInteger("phone_number");

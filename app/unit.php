@@ -6,23 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    public function createData(array $data)
-    {
-        // 
-    }
+    protected $table = 'units';
+    protected $primaryKey = 'uuid';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
-    public function readData(int $id)
-    {
-        // 
-    }
+    protected $fillable = [
+        "name", "content",
+    ];
 
-    public function editData(int $id, array $data)
-    {
-        // 
-    }
-
-    public function deleteData(int $id)
-    {
-        // 
-    }
+    protected $hidden = [
+        "id"
+    ];
 }

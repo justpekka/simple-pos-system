@@ -15,13 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid("uuid");
+            $table->uuid("uuid")->unique();
             $table->dateTimeTz("date");
             $table->string("customer_name");
             $table->text("customer_address");
-            $table->unsignedBigInteger("supplier_id");
-            $table->foreign("supplier_id")->references("id")->on("suppliers");
-            $table->string("name");
+            $table->unsignedInteger("total");
+            $table->unsignedInteger("discount");
+            $table->unsignedInteger("grand_total");
             $table->timestamps();
         });
     }

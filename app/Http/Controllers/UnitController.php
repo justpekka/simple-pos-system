@@ -14,7 +14,8 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $unit = Unit::all();
+        return $unit;
     }
 
     /**
@@ -35,7 +36,18 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Unit;
+        $data->uuid = GlobalController::createUuid();
+        $data->name = $request->get('name');
+        $data->content = $request->get('content');
+        $data->save();
+        echo $data . "\n";
+
+        if(! $data) {
+            return "error saving data!";
+        }
+
+        return "success saving data!";
     }
 
     /**
@@ -44,9 +56,9 @@ class UnitController extends Controller
      * @param  \App\unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function show(unit $unit)
+    public function show(unit $unit, $uuid)
     {
-        //
+        return $unit::find($uuid);
     }
 
     /**
@@ -67,9 +79,23 @@ class UnitController extends Controller
      * @param  \App\unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, unit $unit)
+    public function update(Request $request, unit $unit, $uuid)
     {
-        //
+        $data = $unit::find($uuid);
+        $data->name = is_null($request->get('name')) ?
+                    $data->name : 
+                    $request->get('name');
+        $data->content = is_null($request->get('content')) ?
+                    $data->content :
+                    $request->get('content');
+        $data->save();
+        echo $data . "\n";
+
+        if(! $data) {
+            return "error updating data!";
+        }
+
+        return "success updating data!";
     }
 
     /**
@@ -78,8 +104,14 @@ class UnitController extends Controller
      * @param  \App\unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(unit $unit)
+    public function destroy(unit $unit, $uuid)
     {
-        //
+        $data = $unit::destroy($uuid);
+
+        if(! $data) {
+            return "error deleting data!";
+        }
+
+        return "success deleting data!";
     }
 }

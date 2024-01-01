@@ -14,7 +14,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stock = Stock::all();
+        return $stock;
     }
 
     /**
@@ -35,7 +36,19 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Stock;
+        $data->uuid = GlobalController::createUuid();
+        $data->product_uuid = $request->get("product-uuid");
+        $data->unit_uuid = $request->get("unit-uuid");
+        $data->amount = $request->get("amount");
+        $data->save();
+        echo $data;
+
+        if(! $data) {
+            return "error saving data!";
+        }
+
+        return "success saving data!";
     }
 
     /**
@@ -44,9 +57,9 @@ class StockController extends Controller
      * @param  \App\stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(stock $stock)
+    public function show(stock $stock, $uuid)
     {
-        //
+        return $stock::find($uuid);
     }
 
     /**
@@ -69,7 +82,7 @@ class StockController extends Controller
      */
     public function update(Request $request, stock $stock)
     {
-        //
+        // 
     }
 
     /**
@@ -78,8 +91,16 @@ class StockController extends Controller
      * @param  \App\stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(stock $stock)
+    public function destroy(stock $stock, $uuid)
     {
-        //
+        $status = $stock->destroy($uuid);
+        print $status;
+
+        if(! $status) {
+            return "error deleting data!";
+        }
+
+        return "success deleting data!";
+
     }
 }

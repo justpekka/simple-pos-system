@@ -15,13 +15,12 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid("uuid");
-            $table->unsignedBigInteger("product_id");
-            $table->foreign("product_id")->references("id")->on("products");
-            $table->unsignedBigInteger("unit_id");
-            $table->foreign("unit_id")->references("id")->on("unit");
+            $table->uuid("uuid")->unique();
+            $table->string("product_uuid")->nullable();
+            $table->foreign("product_uuid")->references("uuid")->on("products")->onDelete("SET NULL");
+            $table->string("unit_uuid")->nullable();
+            $table->foreign("unit_uuid")->references("uuid")->on("units")->onDelete("SET NULL");
             $table->integer("amount");
-            $table->string("name");
             $table->timestamps();
         });
     }

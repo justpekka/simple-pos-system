@@ -15,7 +15,7 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid("uuid");
+            $table->uuid("uuid")->unique();
             $table->string("name");
             $table->text("content");
             $table->softDeletes();
